@@ -95,8 +95,8 @@ section h3 { text-align:center; margin:2.5rem 0 1.5rem 0; font-size:1.5rem; colo
 .project-images { display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem; }
 .project-images img { width:100%; max-width:250px; height:180px; object-fit:cover; border-radius:8px; cursor:pointer; transition: transform 0.3s; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
 .project-images img:hover { transform:scale(1.03); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-.git-link { font-weight:normal; font-size:0.85rem; margin-top:auto; color:var(--secondary); display:flex; align-items:center; justify-content:center; text-align:center; }
-.git-link a { color:var(--primary); text-decoration:none; font-weight:600; transition: color 0.3s; margin-left:0.3rem; }
+.git-link { gap: 1rem; font-weight:normal; font-size:0.85rem; margin-top:auto; color:var(--secondary); display:flex; align-items:center; justify-content:center; text-align:center; }
+.git-link a { color:var(--primary); text-decoration:none; font-weight:bold; transition: color 0.3s; margin-left:0.3rem; }
 .git-link a:hover { color:#1e7e34; }
 .tech-tags { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.5rem; }
 .tech-tags .tech { background-color:#28a74533; color:var(--primary); padding:2px 6px; border-radius:6px; font-size:0.7rem; font-weight:bold; }
@@ -363,9 +363,10 @@ populateExtras("certifications", extras.certifications);
 // ===== Projects Data =====
 const projects = [
   {
-    title: "Created My Portfolio Website",
+    title: "Personal Portfolio Website",
     description: "Developed a personal portfolio website to showcase my skills, projects, and experiences. Utilized HTML, CSS, and JavaScript to create a responsive and visually appealing design. Implemented features such as dark/light mode toggle, project lightbox, and smooth scrolling for enhanced user experience.",
     link: "https://github.com/thiruniw/thiruni-portfolio",
+    demo: "https://thiruniwijeportfolio.netlify.app/",
     screenshots: ["images/myself.png"],
     tech: ["HTML","CSS","JavaScript"]
   },
@@ -373,6 +374,7 @@ const projects = [
     title: "RideGuard",
     description: "Predictive ML model for driver ride cancellations. Used a real word dataset to analyze factors influencing cancellations. Implemented data preprocessing, feature engineering, and trained models like Logistic Regression, Random Forest, and DT. Achieved high accuracy with Decision Tree. Developed an interactive dashboard for visualizing insights and model predictions using Streamlit.",
     link: "https://github.com/hirusha-03/RideGuard",
+    demo: "https://hirusha-03-rideguard-app-uegd3n.streamlit.app/",
     screenshots: ["images/ride1.png"],
     tech: ["ML","Python","Scikit-Learn","Streamlit","Colab"]
   },
@@ -380,6 +382,7 @@ const projects = [
     title: "StudyAura",
     description: "Adaptive Exam Preparation AI system using multi-agent architecture. Quiz, Planner and Performance Agent working together to enhance learning experience. Used NLP techniques,LLM integrations and API keys.Developed the system with python along with FastAPI and Streamlit for frontend.",
     link: "https://github.com/LochanaLithira/Adaptive-Exam-Preparation-AI",
+    demo: "",
     screenshots: ["images/1.png","images/2.png","images/3.png","images/4.png"],
     tech: ["NLP","LLM","FastAPI","MongoDB","Streamlit"]
   },
@@ -387,6 +390,7 @@ const projects = [
     title: "BakedTato",
     description: "Web-based food delivery system for baked potato business.Developed using MERN stack with features like user authentication, menu browsing, order placement, and admin order management.",
     link: "",
+    demo:"",
     screenshots: ["images/bake1.png"],
     tech: ["React","Node.js","Express.js","MongoDB"]
   },
@@ -394,6 +398,7 @@ const projects = [
     title: "WorkHive",
     description: "Online employee management system for HR operations. Developed using Java and SQL with features like employee records, attendance tracking, and performance evaluations. This mainly followed the MVC architecture.",
     link: "",
+    demo:"",
     screenshots: ["images/staff.jpg"],
     tech: ["Java","MySQL","HTML","CSS","Servlets","MVC"]
   },
@@ -401,6 +406,7 @@ const projects = [
     title: "Adcraft - Online Advertising Agency",
     description: "Platform for creating & sharing online advertisements. Developed using HTML, CSS, JS, PHP & MySQL. Features include user registration, ad creation, campaign management, and analytics dashboard.",
     link: "",
+    demo:"",
     screenshots: ["images/adv.png"],
     tech: ["HTML","CSS","JS","PHP"]
   }
@@ -422,12 +428,12 @@ projects.forEach(proj=>{
 
   let techHTML = `<div class="tech-tags">${proj.tech.map(t=>`<div class="tech">${t}</div>`).join("")}</div>`;
 
-  let linkHTML = proj.link ? `<div class="git-link">Check out Git Repo: <a href="${proj.link}" target="_blank">LinkToGitHub</a></div>` : "";
+  let linkHTML = proj.link || proj.demo ? `<div class="git-link">${proj.link ? `<a href="${proj.link}" target="_blank">🐱 Git Repo</a>` : ""} ${proj.demo ? `<a href="${proj.demo}" target="_blank">🌐 Demo</a>` : ""}</div>` : "";
 
   card.innerHTML = `<h3>${proj.title}</h3>
     ${imagesHTML}
     <p>${proj.description}</p>
-    ${techHTML}
+    ${techHTML}<br>
     ${linkHTML}`;
 
   projectsContainer.appendChild(card);
