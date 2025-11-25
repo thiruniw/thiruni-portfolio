@@ -340,7 +340,7 @@ skills.forEach(cat=>{
   div.className="skill-category";
   div.innerHTML = `<h3>${cat.category}</h3>
     <div class="skill-cards">
-      ${cat.items.map(i=>`<div class="skill-card"><i class="${i.icon}"></i> ${i.name}</div>`).join("")}
+      ${cat.items.map(i=>`<div class="skill-card pop-in"><i class="${i.icon}"></i> ${i.name}</div>`).join("")}
     </div>`;
   skillsContainer.appendChild(div);
 });
@@ -371,7 +371,8 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('visible');
       }
     });
   }, { threshold: 0.15 });
