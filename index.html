@@ -147,6 +147,25 @@ footer a:hover { text-decoration:underline; }
   }
 }
 
+/* Mobile Responsiveness Tweaks */
+@media (max-width: 480px) {
+  nav ul { flex-direction: column; gap: 1rem; }
+  nav ul li { margin-left: 0; }
+  
+  .hero { padding: 2rem 1rem; }
+  .profile-pic { width: 120px; }
+  
+  .contact-row { flex-direction: column; gap: 1rem; text-align: center; }
+  
+  .projects-container, .extras-container {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .skill-cards { flex-direction: column; gap: 0.5rem; }
+  
+  .cv-btn { font-size: 0.85rem; padding: 6px 10px; }
+}
+
   </style>
 </head>
 <body>
