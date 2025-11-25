@@ -31,6 +31,9 @@ body { line-height:1.6; background-color:#e6f5ea; color:#000; transition: backgr
 .animate:nth-child(3) { animation-delay: 0.4s; }
 .profile-pic { animation: scaleIn 1s ease-out 0.3s backwards; }
 .hero { animation: fadeIn 0.6s ease-out; }
+/* Pop-in Animation */
+.pop-in { opacity:0; transform:translateY(40px); transition:opacity 0.7s, transform 0.7s; }
+.pop-in.visible { opacity:1; transform:translateY(0); }
 
 /* Dark Mode */
 body.dark-mode { background-color:#121212; color:#f0f0f0; }
@@ -193,7 +196,7 @@ footer a:hover { text-decoration:underline; }
   </nav>
 
   <!-- Hero / About Me -->
-  <section id="about" class="hero">
+    <section id="about" class="hero pop-in">
     <div class="about-card">
       <a href="#" class="cv-btn"><i class="fa-solid fa-file-pdf"></i> Download CV</a>
       <img src="https://avatars.githubusercontent.com/u/189772320?s=400&u=d8e83e543a06286c79fbf95b0c4337f89f71f345&v=4" alt="Thiruni Wijerathne" class="profile-pic">
@@ -202,7 +205,7 @@ footer a:hover { text-decoration:underline; }
       <p>I am currently a 3rd year Undergraduate at SLIIT pursuing a Bachelors Degree in IT specializing in Data Science. I enjoy learning new tools, exploring data patterns, and uncovering insights that make an impact. Beyond academics, I have a passion for music, which fuels my creativity and balance. Always eager to collaborate, grow, and learn something new every day.</p>
 
       <!-- Contact Info -->
-      <div class="contact-row">
+        <div class="contact-row pop-in">
         <div class="contact-item"><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:thiruwijerathne@gmail.com">thiruwijerathne@gmail.com</a></div>
         <div class="contact-item"><i class="fa-brands fa-github"></i> Git: <a href="https://github.com/thiruniw" target="_blank">github.com/thiruniw</a></div>
         <div class="contact-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: <a href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank">thiruni-wijerathne</a></div>
@@ -212,7 +215,7 @@ footer a:hover { text-decoration:underline; }
   </section>
 
   <!-- Skills Section -->
-  <section id="skills" class="animate">
+    <section id="skills" class="animate pop-in">
     <h2>Technical Experience</h2>
     <div class="skills-container"></div>
   </section>
@@ -224,23 +227,23 @@ footer a:hover { text-decoration:underline; }
   </section>
 
   <!-- Extras Section -->
-  <section id="extras" class="animate">
+    <section id="extras" class="animate pop-in">
     <h2>Extras</h2>
 
     <h3><i class="fa-solid fa-lightbulb"></i> Soft Skills</h3>
-    <div class="extras-container" id="softskills"></div>
+      <div class="extras-container pop-in" id="softskills"></div>
 
     <h3><i class="fa-solid fa-trophy"></i> Key Achievements</h3>
-    <div class="extras-container" id="achievements"></div>
+      <div class="extras-container pop-in" id="achievements"></div>
 
     <h3><i class="fa-solid fa-certificate"></i> Certifications</h3>
-    <div class="extras-container" id="certifications"></div>
+      <div class="extras-container pop-in" id="certifications"></div>
   </section>
 
   <!-- Interests Section -->
-  <section id="interests" class="animate">
+    <section id="interests" class="animate pop-in">
     <h2>Mostly Interested In</h2>
-    <div class="extras-container" style="max-width:1000px;">
+      <div class="extras-container pop-in" style="max-width:1000px;">
       <div class="extra-card"><i class="fa-brands fa-python"></i><span>Python</span></div>
       <div class="extra-card"><i class="fa-solid fa-brain"></i><span>Machine Learning</span></div>
       <div class="extra-card"><i class="fa-solid fa-chart-line"></i><span>Data Visualization & Analysis</span></div>
@@ -360,6 +363,20 @@ function populateExtras(id, items){
 populateExtras("softskills", extras.softskills);
 populateExtras("achievements", extras.achievements);
 populateExtras("certifications", extras.certifications);
+
+// ===== Pop-in Animation on Scroll =====
+document.addEventListener("DOMContentLoaded", () => {
+  const popElements = document.querySelectorAll('.pop-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  popElements.forEach(el => observer.observe(el));
+});
 
 // ===== Projects Data =====
 const projects = [
