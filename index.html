@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thiruni Wijerathne Portfolio</title>
+  <title>ThiruniW || Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2328a745' width='100' height='100'/><circle cx='30' cy='30' r='8' fill='white'/><circle cx='50' cy='25' r='8' fill='white'/><circle cx='70' cy='35' r='8' fill='white'/><line x1='30' y1='30' x2='50' y2='25' stroke='white' stroke-width='2'/><line x1='50' y1='25' x2='70' y2='35' stroke='white' stroke-width='2'/><path d='M 25 60 L 35 45 L 45 55 L 55 40 L 65 50 L 75 45 L 75 70 L 25 70 Z' fill='white' opacity='0.8'/></svg>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -311,6 +311,124 @@ a.footer-contact-card:focus, a.footer-contact-card:hover { text-decoration:none;
   margin-bottom: 1rem;
 }
 }
+/* Form wrapper - center the form */
+.contact-form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+/* Contact form card */
+.contact-form-card {
+  width: 500px;
+  max-width: 95%;
+  background-color: #000; /* dark mode default */
+  color: #28a745; /* green text in dark mode */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/* Quick info inside form */
+.form-info {
+  background-color: #111; /* slightly lighter black */
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  border: 2px solid #28a74533;
+}
+
+/* Gap between quick info and inputs */
+.form-gap {
+  margin-top: 0.8rem;
+}
+
+/* Quick Info headings and paragraphs inherit form color */
+.form-info h3, .form-info p {
+  margin: 0.2rem 0;
+  text-align: center;
+}
+
+/* Form elements */
+.contact-form-card label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: inherit;
+}
+
+.contact-form-card input,
+.contact-form-card textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 2px solid #28a74533;
+  font-size: 1rem;
+  background-color: #111;
+  color: #28a745;
+  font-family: inherit;
+  transition: border-color 0.3s, background-color 0.5s, color 0.5s;
+}
+
+.contact-form-card input:hover,
+.contact-form-card textarea:hover {
+  border-color: #28a745;
+}
+
+/* Send Message button full width */
+.contact-form-card button {
+  width: 100%;
+  background-color: #28a745;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.contact-form-card button:hover {
+  background-color: #1b5e20;
+  color: #fff;
+}
+
+/* LIGHT MODE FIX */
+body.light-mode .contact-form-card {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #ccc !important;
+}
+
+body.light-mode .form-info {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #ccc !important;
+}
+
+body.light-mode .contact-form-card input,
+body.light-mode .contact-form-card textarea {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #ccc !important;
+}
+
+body.light-mode .contact-form-card button {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-form-card {
+    width: 100%;
+  }
+}
 </style>
 </head>
 
@@ -426,28 +544,46 @@ a.footer-contact-card:focus, a.footer-contact-card:hover { text-decoration:none;
   </div>
 
   <!-- Connect Section -->
-  <section id="connect" class="animate pop-in">
-    <h2>Connect With Me</h2>
-    <div class="contact-form-card">
-      <form id="contactForm" style="display:flex; flex-direction:column; gap:1.5rem;">
-        <div>
-          <label for="name" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Your Name</label>
-          <input type="text" id="name" name="name" required style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'">
-        </div>
-        <div>
-          <label for="email" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Your Email</label>
-          <input type="email" id="email" name="email" required style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'">
-        </div>
-        <div>
-          <label for="message" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Message</label>
-          <textarea id="message" name="message" required rows="5" style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; font-family:inherit; transition:border-color 0.3s; resize:vertical;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'"></textarea>
-        </div>
-        <button type="submit" style="background-color:var(--primary); color:#fff; padding:0.8rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer; transition:background-color 0.3s;" onmouseover="this.style.backgroundColor='#1b5e20'" onmouseout="this.style.backgroundColor='var(--primary)'"><i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Send Message</button>
-      </form>
-    </div>
-  </section>
+<section id="connect" class="animate pop-in">
+  <h2>Connect With Me</h2>
 
-  <!-- Footer -->
+  <!-- Centered form wrapper -->
+  <div class="contact-form-wrapper">
+
+    <!-- Form with integrated info at top -->
+    <div class="contact-form-card">
+
+      <!-- Quick Info inside form -->
+      <div class="form-info">
+        <h3>-- Quick Info --</h3>
+        <p>✉️ I usually respond within <strong>24 – 48 hours</strong>.</p>
+        <p>📞 Feel free to <strong>call me</strong> after 7:00PM, Mon-Fri</p>
+        <p>😊 Looking forward to connecting with you!</p>
+      </div>
+
+      <!-- Actual form -->
+      <form id="contactForm">
+        <div class="form-gap">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-gap">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-gap">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required rows="6"></textarea>
+        </div>
+        <br>
+        <button type="submit"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
   <footer>
     <p>© 2025 Thiruni Wijerathne | Designed & Built by Thiruni Wijerathne</p>
     <p class="thanks" style="font-size:0.95rem; margin:0.5rem 0 0 0;"><i class="fa-solid fa-handshake" style="color:var(--primary);"></i> Thank you for visiting!</p>
@@ -583,7 +719,7 @@ const projects = [
     description: "Adaptive Exam Preparation AI system using multi-agent architecture. Quiz, Planner and Performance Agent working together to enhance learning experience. Used NLP techniques,LLM integrations and API keys.Developed the system with python along with FastAPI and Streamlit for frontend.",
     link: "https://github.com/LochanaLithira/Adaptive-Exam-Preparation-AI",
     demo: "",
-    screenshots: ["images/1.png","images/2.png","images/3.png","images/4.png"],
+    screenshots: ["images/1.png","images/2.png","images/3.png","images/4.png","images/5.png","images/6.png","images/7.png","images/8.png"],
     tech: ["NLP","LLM Integrations","TF-IDF","Python","FastAPI","Streamlit","Agentic AI","API Keys","MongoDB"]
   },
   {
@@ -762,7 +898,7 @@ updateActiveNav();
             message: message
         })
         .then(function() {
-            statusEl.textContent = "Message sent successfully! 💌";
+            statusEl.textContent = "Thank you for connecting! I will respond soon 💌";
             statusEl.style.color = "var(--primary)";
             contactForm.reset();
             if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHTML || 'Send Message'; }
@@ -771,10 +907,10 @@ updateActiveNav();
             setTimeout(() => {
                 statusEl.style.opacity = "0";
             }, 2000);
-            
+
         }, function(error) {
             console.log(error);
-            statusEl.textContent = "Failed to send message. Please try again.";
+            statusEl.textContent = "Failed to send message. Please try again!";
             statusEl.style.color = "#d9534f";
             if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHTML || 'Send Message'; }
         });
