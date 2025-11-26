@@ -29,30 +29,90 @@ body { line-height:1.6; background-color:#e6f5ea; color:#000; transition: backgr
 .animate { opacity:0; animation: fadeInUp 0.8s ease-out forwards; }
 .animate:nth-child(2) { animation-delay: 0.2s; }
 .animate:nth-child(3) { animation-delay: 0.4s; }
-.profile-pic { animation: scaleIn 1s ease-out 0.3s backwards; }
+.profile-pic { animation: none; }
 .hero { animation: fadeIn 0.6s ease-out; }
 /* Pop-in Animation */
 .pop-in { opacity:0; transform:translateY(40px); transition:opacity 0.7s, transform 0.7s; }
 .pop-in.visible { opacity:1; transform:translateY(0); }
 
+/* Lively hero entrance animation (triggers when .pop-in becomes .visible) */
+.hero-compact.pop-in.visible {
+  animation: lively 900ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+@keyframes lively {
+  0% { transform: translateY(18px) scale(0.985); opacity: 0; }
+  40% { transform: translateY(-8px) scale(1.03); opacity: 1; }
+  70% { transform: translateY(4px) scale(0.995); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Entrance for subtitle/button/contacts and continuous float for name, subtitle and resume button */
+.hero-compact h1 { opacity:1; }
+.hero-compact h3, .hero-compact .download-btn, .hero-compact .contact-row { opacity:0; }
+.hero-compact.pop-in.visible h1 {
+  /* continuous lively float for the name */
+  animation: floatName 4s ease-in-out infinite 300ms;
+}
+.hero-compact.pop-in.visible h3 {
+  animation: subtitleShow 900ms cubic-bezier(.2,.9,.2,1) both 400ms, floatSmall 5s ease-in-out 1400ms infinite;
+}
+.hero-compact.pop-in.visible .download-btn {
+  animation: btnShow 700ms ease both 600ms, floatSmall 5s ease-in-out 1600ms infinite;
+}
+.hero-compact.pop-in.visible .contact-row {
+  animation: contactsShow 700ms ease both 800ms;
+}
+
+@keyframes subtitleShow {
+  0% { opacity:0; transform: translateY(10px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+@keyframes btnShow {
+  0% { opacity:0; transform: translateY(8px) scale(0.98); }
+  100% { opacity:1; transform: translateY(0) scale(1); }
+}
+@keyframes contactsShow {
+  0% { opacity:0; transform: translateY(8px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+
+@keyframes floatName {
+  0% { transform: translateY(0px); }
+  25% { transform: translateY(-6px) scale(1.01); }
+  50% { transform: translateY(0px) scale(1); }
+  75% { transform: translateY(3px) scale(0.995); }
+  100% { transform: translateY(0px); }
+}
+@keyframes floatSmall {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px) scale(1.005); }
+  100% { transform: translateY(0px); }
+}
+
 /* Dark Mode */
 body.dark-mode { background-color:#121212; color:#f0f0f0; }
-body.dark-mode .hero, body.dark-mode .project-card, body.dark-mode .extra-card, body.dark-mode .about-card { background-color:#1e1e1e; border-color:#28a745; color:#f0f0f0; }
+body.dark-mode .hero, body.dark-mode .project-card, body.dark-mode .extra-card, body.dark-mode .about-card, body.dark-mode .hero-compact, body.dark-mode .tech-exp-card, body.dark-mode .footer-contact-card { background-color:#1e1e1e; border-color:#28a745; color:#f0f0f0; }
 body.dark-mode .skills-container .skill-card { background-color:#28a74522; }
 body.dark-mode nav, body.dark-mode footer { background-color:#1e1e1e; }
 body.dark-mode .achievement-card, body.dark-mode .certification-card, body.dark-mode .softskill-card { background-color:#1e1e1e; border-color:#28a745; }
-body.dark-mode .project-card h3, body.dark-mode .project-card p, body.dark-mode .extra-card span, body.dark-mode .git-link { color:#f0f0f0; }
+body.dark-mode .project-card h3, body.dark-mode .project-card p, body.dark-mode .extra-card span, body.dark-mode .git-link, body.dark-mode .tech-exp-card h4 { color:#f0f0f0; }
 body.dark-mode .skill-category h3 { color:#f0f0f0; }
 body.dark-mode nav ul li a { color:#f0f0f0; }
+.subtitle { color:#605454; }
+body.dark-mode .subtitle { color:#a8a8a8; }
+/* Footer 'thanks' styling */
+.thanks { color:var(--secondary); display:flex; align-items:center; justify-content:center; gap:0.6rem; font-weight:600; }
+body.dark-mode .thanks { color:#e6e6e6; }
 body.dark-mode footer p { color:#f0f0f0; }
 body.dark-mode section h2, body.dark-mode section h3 { color:#28a745; }
 body.dark-mode .contact-row .contact-item {color: #f0f0f0 }
 
 /* Navbar */
-nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background-color:#ffffff; box-shadow:0 3px 10px rgba(0,0,0,0.2); position:sticky; top:0; z-index:100; }
+nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 5% 1rem 6%; background-color:#ffffff; box-shadow:0 3px 10px rgba(0,0,0,0.2); position:sticky; top:0; z-index:100; }
 nav .logo { font-size:1.5rem; font-weight:bold; color:var(--primary); }
-nav ul { display:flex; list-style:none; }
-nav ul li { margin-left:2rem; }
+nav ul { display:flex; list-style:none; gap:0.5rem; margin:0; margin-left:auto; margin-right:28px; }
+nav ul li { margin-left:1.2rem; }
 nav ul li a { text-decoration:none; color:var(--secondary); transition:color 0.3s; position:relative; }
 nav ul li a:hover { color:var(--primary); }
 nav ul li a.active { color:var(--primary); font-weight:bold; }
@@ -61,8 +121,8 @@ nav ul li a.active::after { content:''; position:absolute; bottom:-5px; left:0; 
 
 /* Hero */
 .hero { text-align:center; padding:4rem 2rem; background-color:#ffffff; border-radius:10px; margin:2rem 5%; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-.profile-pic { width:150px; border-radius:50%; border:4px solid var(--primary); margin-bottom:1rem; }
-.about-card { position: relative; padding: 30px 20px 20px 20px; background-color: #ffffff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.profile-pic { width:160px; border-radius:50%; border:4px solid var(--primary); margin-bottom:1rem; max-width:90vw; }
+.about-card { position: relative; padding: 30px 20px 20px 20px; background-color: #ffffff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
 .cv-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 12px; background-color:#28a745; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold; position:absolute; top:15px; left:15px; transition: background 0.3s;}
 .cv-btn:hover { background-color:#1b5e20; }
 
@@ -112,6 +172,33 @@ section h3 { text-align:center; margin:2.5rem 0 1.5rem 0; font-size:1.5rem; colo
 .extra-card:hover { transform:translateY(-5px); box-shadow:0 8px 16px rgba(40,167,69,0.2); }
 .softskill-card, .achievement-card, .certification-card { background-color:#ffffff; border:2px solid #28a74544; }
 
+/* Tech Experience Cards */
+.tech-exp-container { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem; margin-bottom:3rem; max-width:1200px; margin-left:auto; margin-right:auto; }
+.tech-exp-card { background-color:#ffffff; border:2px solid var(--primary); border-radius:10px; padding:1.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+.tech-exp-card:hover { transform:translateY(-5px); box-shadow:0 8px 20px rgba(40,167,69,0.2); }
+.tech-exp-card h4 { color:var(--primary); font-size:1.1rem; margin-bottom:1rem; text-align:center; }
+.tech-exp-card .tech-item { background-color:#28a74533; color:var(--primary); padding:0.6rem 1rem; border-radius:8px; margin-bottom:0.5rem; font-size:0.9rem; font-weight:500; }
+
+/* Compact Hero Card */
+.hero-compact { text-align:center; padding:2rem; background-color:#ffffff; border-radius:10px; margin:2rem 5%; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+.hero-compact { position: relative; }
+.hero-compact .profile-pic { width:220px; height:220px; border-radius:50%; border:4px solid var(--primary); margin-bottom:-30px; z-index:3; position:relative; object-fit:cover; }
+.hero-compact h1, .hero-compact h3, .hero-compact .cv-btn, .hero-compact .contact-row { position: relative; z-index:2; }
+.hero-compact h1 { margin-bottom:0.5rem; font-size:1.8rem; margin-top:20px; }
+.hero-compact h3 { margin-bottom:1rem; font-size:1rem; color:var(--primary); }
+.hero-compact .download-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 16px; background-color:var(--primary); color:#fff; border-radius:6px; text-decoration:none; font-weight:bold; transition:background 0.3s; margin-top:1rem; }
+.hero-compact .download-btn:hover { background-color:#1b5e20; }
+
+/* Footer Contact Cards */
+.footer-content { display:flex; flex-direction:column; align-items:center; gap:2rem; }
+.footer-contacts { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem; width:100%; max-width:1000px; margin:1.5rem auto; }
+.footer-contact-card { background-color:#ffffff; border:2px solid #28a74544; border-radius:12px; padding:1.5rem; text-align:center; transition:transform 0.3s, box-shadow 0.3s; }
+.footer-contact-card:hover { transform:translateY(-5px); box-shadow:0 8px 16px rgba(40,167,69,0.2); }
+.footer-contact-card i { color:var(--primary); font-size:1.8rem; margin-bottom:0.5rem; }
+.footer-contact-card a { color:var(--primary); text-decoration:none; font-weight:bold; }
+.footer-contact-card a:hover { text-decoration:underline; }
+.footer-contact-card p { margin:0; font-size:0.9rem; }
+
 /* Lightbox */
 .lightbox { display:none; position:fixed; z-index:999; padding-top:60px; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.9); }
 .lightbox-content { margin:auto; display:block; max-width:80%; max-height:80%; border-radius:8px; }
@@ -124,6 +211,9 @@ section h3 { text-align:center; margin:2.5rem 0 1.5rem 0; font-size:1.5rem; colo
 footer { text-align:center; padding:1.5rem; background-color:#ffffff; color:var(--secondary); border-top:1px solid #ddd; margin-top:2rem; }
 footer a { color:var(--primary); text-decoration:none; }
 footer a:hover { text-decoration:underline; }
+/* Make footer contact cards clickable when used as anchors */
+a.footer-contact-card { display:block; color:inherit; text-decoration:none; }
+a.footer-contact-card:focus, a.footer-contact-card:hover { text-decoration:none; }
 
 /* Elegant Soft Animated Gradient Background */
 .animated-bg {
@@ -152,12 +242,16 @@ footer a:hover { text-decoration:underline; }
 }
 
 /* Mobile Responsiveness Tweaks */
-@media (max-width: 480px) {
+  @media (max-width: 480px) {
   nav ul { flex-direction: column; gap: 1rem; }
   nav ul li { margin-left: 0; }
   
+  .hero-compact { padding:1.5rem 1rem; margin:1rem 2%; }
+  .hero-compact h1 { font-size:2.2rem; margin-top:0; }
+  .hero-compact h3 { font-size:0.9rem; }
+  .profile-pic { width:140px; height:140px; margin-bottom:-20px; }
+  
   .hero { padding: 2rem 1rem; }
-  .profile-pic { width: 120px; }
   
   .contact-row { flex-direction: column; gap: 1rem; text-align: center; }
   
@@ -176,7 +270,6 @@ footer a:hover { text-decoration:underline; }
   margin-bottom: 1rem;
 }
 }
-
 </style>
 </head>
 
@@ -188,37 +281,66 @@ footer a:hover { text-decoration:underline; }
     <div class="logo">Thiruni Wijerathne</div>
     <ul>
       <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#skills">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#extras">Extras</a></li>
       <li><a href="#interests">Interests</a></li>
+      <li><a href="#connect">Connect</a></li>
     </ul>
     <div id="mode-toggle" title="Toggle Dark/Light"><i class="fa-solid fa-moon"></i></div>
   </nav>
 
-  <!-- Hero / About Me -->
-    <section id="about" class="hero pop-in">
-    <div class="about-card">
-      <a href="files/Thiruni Wijerathne CV.pdf" class="cv-btn"><i class="fa-solid fa-file-pdf"></i> Download CV</a>
-      <img src="https://avatars.githubusercontent.com/u/189772320?s=400&u=d8e83e543a06286c79fbf95b0c4337f89f71f345&v=4" alt="Thiruni Wijerathne" class="profile-pic">
-      <h1>Hi, I'm Thiruni Wijerathne 👩‍💻</h1>
-      <h3>Data Science Undergraduate | AI & ML Enthusiast | Exploring Data & Analytics</h3>
-      <p>I am currently a 3rd year Undergraduate at SLIIT pursuing a Bachelors Degree in IT specializing in Data Science. I enjoy learning new tools, exploring data patterns, and uncovering insights that make an impact. Beyond academics, I have a passion for music, which fuels my creativity and balance. Always eager to collaborate, grow, and learn something new every day.</p>
+  <!-- Compact Hero -->
+  <section class="hero-compact pop-in" id="home">
+    <img src="https://avatars.githubusercontent.com/u/189772320?s=400&u=d8e83e543a06286c79fbf95b0c4337f89f71f345&v=4" alt="Thiruni Wijerathne" class="profile-pic" />
+    <h1 style="font-size:3.5rem; font-weight:900; margin:1rem 0; color:var(--primary);">Thiruni Wijerathne</h1>
+    <h3>Data Science Undergraduate | AI & ML Enthusiast | Exploring Data </h3>
+    <a href="files/Thiruni Wijerathne CV.pdf" class="cv-btn" style="position:static; display:inline-flex; margin:1rem auto; background-color:#28a745; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold; padding:8px 12px; gap:6px;"><i class="fa-solid fa-file-pdf"></i> Download Resume</a>
+    <!-- Contact Info -->
+    <div class="contact-row pop-in">
+      <div class="contact-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:thiruwijerathne@gmail.com">thiruwijerathne@gmail.com</a></div>
+      <div class="contact-item"><i class="fa-brands fa-github"></i> <a href="https://github.com/thiruniw" target="_blank">github.com/thiruniw</a></div>
+      <div class="contact-item"><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank">LinkedIn</a></div>
+      <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Colombo, Sri Lanka</div>
+    </div>
+  </section>
 
-      <!-- Contact Info -->
-        <div class="contact-row pop-in">
-        <div class="contact-item"><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:thiruwijerathne@gmail.com">thiruwijerathne@gmail.com</a></div>
-        <div class="contact-item"><i class="fa-brands fa-github"></i> Git: <a href="https://github.com/thiruniw" target="_blank">github.com/thiruniw</a></div>
-        <div class="contact-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: <a href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank">thiruni-wijerathne</a></div>
-        <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Location: Colombo, Sri Lanka</div>
+  <!-- About Me Section -->
+  <section id="about" class="animate pop-in">
+    <h2>About Me</h2>
+    <div class="about-card pop-in" style="max-width:900px; margin:0 auto;">
+      <p>I am currently a 3rd year Undergraduate at SLIIT pursuing a Bachelors Degree in IT specializing in Data Science. I enjoy learning new tools, exploring data patterns, and uncovering insights that make an impact. Beyond academics, I have a passion for music, which fuels my creativity and balance. Always eager to collaborate, grow, and learn something new every day.</p>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="animate pop-in">
+    <h2>Education</h2>
+    <div class="extras-container">
+      <div class="extra-card pop-in">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <div style="text-align:left;">
+          <strong>Sri Lanka Institue of Information Technology</strong>
+          <p class="subtitle" style="margin:0.5rem 0 0 0;">Bachelor of Science (Hons) in Information Technology Specializing in Data Science</p>
+          <p style="margin:0.5rem 0 0 0; color:#28a745; font-weight:bold;">2023 - Present</p>
+        </div>
+      </div>
+      <div class="extra-card pop-in">
+        <i class="fa-solid fa-book"></i>
+        <div style="text-align:left;">
+          <strong>Musaeus College Colombo 07</strong>
+          <p class="subtitle" style="margin:0.5rem 0 0 0;">Advanced Level</p>
+          <p style="margin:0.5rem 0 0 0; color:#28a745; font-weight:bold;">2020-2022</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Skills Section -->
-    <section id="skills" class="animate pop-in">
+  <section id="skills" class="animate pop-in">
     <h2>Technical Experience</h2>
-    <div class="skills-container"></div>
+    <div class="tech-exp-container" id="techExpContainer"></div>
   </section>
 
   <!-- Projects Section -->
@@ -242,7 +364,7 @@ footer a:hover { text-decoration:underline; }
   </section>
 
   <!-- Interests Section -->
-    <section id="interests" class="animate pop-in">
+  <section id="interests" class="animate pop-in">
     <h2>Mostly Interested In</h2>
       <div class="extras-container pop-in" style="max-width:1000px;">
       <div class="extra-card"><i class="fa-brands fa-python"></i><span>Python</span></div>
@@ -262,15 +384,21 @@ footer a:hover { text-decoration:underline; }
     <div class="lightbox-thumbs" id="lightbox-thumbs"></div>
   </div>
 
+  <!-- Connect Section -->
+  <section id="connect" class="animate pop-in">
+    <h2>Connect With Me</h2>
+    <div class="footer-contacts" style="margin-top:2rem;">
+      <a class="footer-contact-card pop-in" href="mailto:thiruwijerathne@gmail.com" title="Email Thiruni"><i class="fa-solid fa-envelope"></i><p>thiruwijerathne@gmail.com</p></a>
+      <a class="footer-contact-card pop-in" href="https://github.com/thiruniw" target="_blank" rel="noopener noreferrer" title="Visit GitHub"><i class="fa-brands fa-github"></i><p>GitHub</p></a>
+      <a class="footer-contact-card pop-in" href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank" rel="noopener noreferrer" title="Visit LinkedIn"><i class="fa-brands fa-linkedin"></i><p>LinkedIn</p></a>
+      <a class="footer-contact-card pop-in" href="tel:+94757489276" title="Call"><i class="fa-solid fa-phone"></i><p>+94 75 748 9276</p></a>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     <p>© 2025 Thiruni Wijerathne | Designed & Built by Thiruni Wijerathne</p>
-    <div style="display:flex; justify-content:center; gap:2rem; margin-top:1rem; flex-wrap:wrap;">
-      <a href="mailto:thiruwijerathne@gmail.com" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-solid fa-envelope"></i> thiruwijerathne@gmail.com</a>
-      <a href="tel:+94757489276" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-solid fa-phone"></i> +94 75 748 9276</a>
-      <a href="https://github.com/thiruniw" target="_blank" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-brands fa-github"></i> GitHub</a>
-      <a href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-    </div>
+    <p class="thanks" style="font-size:0.95rem; margin:0.5rem 0 0 0;"><i class="fa-solid fa-handshake" style="color:var(--primary);"></i> Thank you for visiting!</p>
   </footer>
 
   <script>
@@ -334,16 +462,17 @@ const skills = [
     {name:"MS Office", icon:"fa-solid fa-file"}
   ]}
 ];
-const skillsContainer = document.querySelector(".skills-container");
-skills.forEach(cat=>{
-  const div = document.createElement("div");
-  div.className="skill-category";
-  div.innerHTML = `<h3>${cat.category}</h3>
-    <div class="skill-cards">
-      ${cat.items.map(i=>`<div class="skill-card pop-in"><i class="${i.icon}"></i> ${i.name}</div>`).join("")}
-    </div>`;
-  skillsContainer.appendChild(div);
-});
+// Render technical experience as cards
+const techExpContainer = document.getElementById("techExpContainer");
+if(techExpContainer){
+  skills.forEach(cat=>{
+    const card = document.createElement("div");
+    card.className = "tech-exp-card pop-in";
+    const iconClass = cat.items[0]?.icon || "fa-solid fa-code";
+    card.innerHTML = `<h4><i class="${iconClass}" style="margin-right:0.5rem;"></i>${cat.category}</h4>${cat.items.map(i=>`<div class="tech-item">${i.name}</div>`).join("")}`;
+    techExpContainer.appendChild(card);
+  });
+}
 
 // extras
 const extras = {
@@ -445,14 +574,15 @@ projects.forEach(proj=>{
     </div>`;
   }
 
-  let techHTML = `<div class="tech-tags">${proj.tech.map(t=>`<div class="tech">${t}</div>`).join("")}</div>`;
+  let techHTML = `<div class="tech-tags" style="justify-content:center;">${proj.tech.map(t=>`<div class="tech">${t}</div>`).join("")}</div>`;
 
-  let linkHTML = proj.link || proj.demo ? `<div class="git-link">${proj.link ? `<a href="${proj.link}" target="_blank">🐱 Git Repo</a>` : ""} ${proj.demo ? `<a href="${proj.demo}" target="_blank">🌐 Demo</a>` : ""}</div>` : "";
+  let linkHTML = proj.link || proj.demo ? `<div class="git-link">${proj.link ? `<a href="${proj.link}" target="_blank">🔗 Git Repo</a>` : ""} ${proj.demo ? `<a href="${proj.demo}" target="_blank">🌐 Demo</a>` : ""}</div>` : "";
 
   card.innerHTML = `<h3>${proj.title}</h3>
     ${imagesHTML}
     <p>${proj.description}</p>
-    ${techHTML}<br>
+    ${techHTML}
+    <br>
     ${linkHTML}`;
 
   projectsContainer.appendChild(card);
@@ -503,28 +633,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// nav link active on scroll
+// nav link active on scroll (use viewport center to determine active section)
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('nav ul li a');
 
-window.addEventListener('scroll', () => {
+function updateActiveNav(){
   let current = '';
-  
+  const mid = window.innerHeight / 2;
   sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    if (pageYOffset >= sectionTop - 100) {
+    const rect = section.getBoundingClientRect();
+    if(rect.top <= mid && rect.bottom >= mid){
       current = section.getAttribute('id');
     }
   });
+  // fallback: at very bottom -> last section
+  if(!current && (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2)){
+    const last = sections[sections.length -1];
+    if(last) current = last.getAttribute('id');
+  }
 
   navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
+    const isActive = link.getAttribute('href') === `#${current}`;
+    link.classList.toggle('active', isActive);
   });
-});
+}
+
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('resize', updateActiveNav);
+// run once on load
+updateActiveNav();
+
+// (Typing loop removed — replaced with CSS fade animation for the full name.)
   </script>
 </body>
 </html>
