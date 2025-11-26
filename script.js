@@ -1,6 +1,4 @@
-// ===== Skills & Extras =====
-// same as your previous JS for skills and extras
-// populate skills
+//  skills
 const skills = [
   {category:"Programming", items:[
     {name:"Python", icon:"fa-brands fa-python"},
@@ -71,7 +69,7 @@ populateExtras("softskills", extras.softskills);
 populateExtras("achievements", extras.achievements);
 populateExtras("certifications", extras.certifications);
 
-// ===== Projects Data =====
+// projects
 const projects = [
   {
     title: "RideGuard",
@@ -110,7 +108,7 @@ const projects = [
   }
 ];
 
-// ===== Populate Projects as Square Cards with Tech Tags =====
+// proj in square cards
 const projectsContainer = document.querySelector(".projects-container");
 projectsContainer.innerHTML = "";
 projects.forEach(proj=>{

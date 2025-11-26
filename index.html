@@ -177,8 +177,9 @@ footer a:hover { text-decoration:underline; }
 }
 }
 
-  </style>
+</style>
 </head>
+
 <body>
   <div class="animated-bg"></div>
 
@@ -273,7 +274,7 @@ footer a:hover { text-decoration:underline; }
   </footer>
 
   <script>
-// ===== Skills & Extras =====
+//Javascript Code
 const skills = [
   {category:"Programming Languages", items:[
     {name:"Python", icon:"fa-brands fa-python"},
@@ -313,7 +314,7 @@ const skills = [
   {category:"Data Visualization", items:[
     {name:"Matplotlib", icon:"fa-solid fa-chart-line"},
     {name:"Seaborn", icon:"fa-solid fa-chart-bar"},
-    {name:"Plotly", icon:"fa-solid fa-chart-pie"},
+    {name:"Correlation Analysis", icon:"fa-solid fa-chart-bar"},
     {name:"PowerBI (Basic)", icon:"fa-solid fa-chart-column"},
     {name:"Streamlit", icon:"fa-solid fa-desktop"}
   ]},
@@ -322,16 +323,15 @@ const skills = [
     {name:"MySQL", icon:"fa-solid fa-database"},
     {name:"SQL Server", icon:"fa-solid fa-server"},
     {name:"FastAPI", icon:"fa-solid fa-network-wired"},
-    {name:"RESTful APIs", icon:"fa-solid fa-plug"}
   ]},
   {category:"Tools & Platforms", items:[
     {name:"Jupyter Notebook", icon:"fa-brands fa-python"},
     {name:"Google Colab", icon:"fa-brands fa-google"},
     {name:"VS Code", icon:"fa-solid fa-code"},
     {name:"R Studio", icon:"fa-solid fa-chart-line"},
-    {name:"Git & GitHub", icon:"fa-brands fa-git"},
+    {name:"GitHub", icon:"fa-brands fa-git"},
     {name:"Scikit-Learn", icon:"fa-solid fa-robot"},
-    {name:"Excel", icon:"fa-solid fa-file-excel"}
+    {name:"MS Office", icon:"fa-solid fa-file"}
   ]}
 ];
 const skillsContainer = document.querySelector(".skills-container");
@@ -364,7 +364,7 @@ populateExtras("softskills", extras.softskills);
 populateExtras("achievements", extras.achievements);
 populateExtras("certifications", extras.certifications);
 
-// ===== Pop-in Animation on Scroll =====
+// animations on scroll
 document.addEventListener("DOMContentLoaded", () => {
   const popElements = document.querySelectorAll('.pop-in');
   const observer = new IntersectionObserver((entries) => {
@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
   popElements.forEach(el => observer.observe(el));
 });
 
-// ===== Projects Data =====
+// project data
 const projects = [
   {
     title: "Personal Portfolio Website",
@@ -431,7 +431,7 @@ const projects = [
   }
 ];
 
-// ===== Populate Projects as Square Cards with Tech Tags =====
+// Square Cards with Tech Tags
 const projectsContainer = document.querySelector(".projects-container");
 projectsContainer.innerHTML = "";
 projects.forEach(proj=>{
@@ -458,7 +458,7 @@ projects.forEach(proj=>{
   projectsContainer.appendChild(card);
 });
 
-// ===== Lightbox =====
+// lightbox functionality
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 const lightboxThumbs = document.getElementById("lightbox-thumbs");
@@ -488,7 +488,7 @@ function openLightbox(project){
 closeBtn.onclick = ()=>{lightbox.style.display="none";}
 lightbox.onclick = (e)=>{if(e.target===lightbox) lightbox.style.display="none";}
 
-// ===== Dark/Light Mode Toggle =====
+// dark/light mode toggle
 document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("dark-mode"); // default dark
     const toggleBtn = document.getElementById("mode-toggle");
@@ -503,7 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ===== Active Nav Link on Scroll =====
+// nav link active on scroll
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('nav ul li a');
 
