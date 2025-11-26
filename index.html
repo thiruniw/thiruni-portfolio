@@ -6,7 +6,30 @@
   <title>Thiruni Wijerathne Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2328a745' width='100' height='100'/><circle cx='30' cy='30' r='8' fill='white'/><circle cx='50' cy='25' r='8' fill='white'/><circle cx='70' cy='35' r='8' fill='white'/><line x1='30' y1='30' x2='50' y2='25' stroke='white' stroke-width='2'/><line x1='50' y1='25' x2='70' y2='35' stroke='white' stroke-width='2'/><path d='M 25 60 L 35 45 L 45 55 L 55 40 L 65 50 L 75 45 L 75 70 L 25 70 Z' fill='white' opacity='0.8'/></svg>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
+  <script>
+    // Ensure EmailJS library is loaded and initialized before use.
+    function ensureEmailJS(pubKey, cb){
+      if(window.emailjs){
+        try{ emailjs.init(pubKey); }catch(e){ console.warn('emailjs init error', e); }
+        if(cb) cb();
+        return;
+      }
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js';
+      s.onload = function(){
+        try{ if(window.emailjs && typeof emailjs.init === 'function') emailjs.init(pubKey); }catch(e){ console.warn('emailjs init error', e); }
+        if(cb) cb();
+      };
+      s.onerror = function(){
+        console.error('Failed to load EmailJS library');
+        if(cb) cb(new Error('emailjs-load-failed'));
+      };
+      document.head.appendChild(s);
+    }
+  </script>
+
   <style>
 /* Reset & Colors */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -132,6 +155,24 @@ nav ul li a.active::after { content:''; position:absolute; bottom:-5px; left:0; 
 .contact-item i { color:var(--primary); font-size:1.2rem; }
 .contact-item a { text-decoration:none; color:var(--primary); font-weight:bold; }
 .contact-item a:hover { color:#1e7e34; }
+
+/* Social icon card style used in hero */
+.social-card { display:inline-flex; align-items:center; justify-content:center; padding:6px; border-radius:8px; background:transparent; border:none; color:var(--primary); font-size:1.6rem; text-decoration:none; transition:transform 0.18s, color 0.18s; }
+.social-card:hover { transform:translateY(-3px) scale(1.05); color:#1b5e20; }
+/* phone number text shown next to phone icon in hero */
+/* phone-number helper removed (phone shows icon only in hero) */
+
+/* Contact form card (for theme-aware styling) */
+.contact-form-card { max-width:600px; margin:2rem auto; background-color:#ffffff; padding:2rem; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:var(--secondary); }
+.contact-form-card label { color:var(--primary); font-weight:700; }
+.contact-form-card input, .contact-form-card textarea { width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; font-family:inherit; color:var(--primary); background-color:#fff; }
+.contact-form-card button { background-color:var(--primary); color:#fff; }
+
+/* Dark mode overrides for the contact form */
+body.dark-mode .contact-form-card { background-color:#121212; color:#f0f0f0; box-shadow:none; }
+body.dark-mode .contact-form-card label { color:#f0f0f0; }
+body.dark-mode .contact-form-card input, body.dark-mode .contact-form-card textarea { background-color:#1e1e1e; color:#f0f0f0; border-color:#333; }
+body.dark-mode .contact-form-card input, body.dark-mode .contact-form-card textarea { color:#f0f0f0; }
 
 /* Sections */
 section { padding:4rem 5%; }
@@ -295,17 +336,17 @@ a.footer-contact-card:focus, a.footer-contact-card:hover { text-decoration:none;
   <section class="hero-compact pop-in" id="home">
     <img src="https://avatars.githubusercontent.com/u/189772320?s=400&u=d8e83e543a06286c79fbf95b0c4337f89f71f345&v=4" alt="Thiruni Wijerathne" class="profile-pic" />
     <h1 style="font-size:3.5rem; font-weight:900; margin:1rem 0; color:var(--primary);">Thiruni Wijerathne</h1>
-    <h3>Data Science Undergraduate | AI & ML Enthusiast | Exploring Data </h3>
+    <h3 style="font-size:1.3rem;">Data Science Undergraduate | AI & ML Enthusiast | Exploring Data </h3>
     <a href="files/Thiruni Wijerathne CV.pdf" class="cv-btn" style="position:static; display:inline-flex; margin:1rem auto; background-color:#28a745; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold; padding:8px 12px; gap:6px;"><i class="fa-solid fa-file-pdf"></i> Download Resume</a>
-    <!-- Contact Info -->
-    <div class="contact-row pop-in">
-      <div class="contact-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:thiruwijerathne@gmail.com">thiruwijerathne@gmail.com</a></div>
-      <div class="contact-item"><i class="fa-brands fa-github"></i> <a href="https://github.com/thiruniw" target="_blank">github.com/thiruniw</a></div>
-      <div class="contact-item"><i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank">LinkedIn</a></div>
-      <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Colombo, Sri Lanka</div>
+    <!-- Contact Icons (social cards) -->
+    <div class="contact-row pop-in" style="gap:1rem; display:flex; align-items:center; justify-content:center;">
+      <a class="social-card" href="mailto:thiruwijerathne@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a class="social-card" href="https://github.com/thiruniw" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a class="social-card" href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a class="social-card" href="https://www.instagram.com/thiruniiii?igsh=ZngyejkwMmx5MGpt&utm_source=qr" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a class="social-card" href="tel:+94757489276" title="Phone"><i class="fa-solid fa-phone"></i></a>
     </div>
-  </section>
-
+    </section>
   <!-- About Me Section -->
   <section id="about" class="animate pop-in">
     <h2>About Me</h2>
@@ -387,11 +428,22 @@ a.footer-contact-card:focus, a.footer-contact-card:hover { text-decoration:none;
   <!-- Connect Section -->
   <section id="connect" class="animate pop-in">
     <h2>Connect With Me</h2>
-    <div class="footer-contacts" style="margin-top:2rem;">
-      <a class="footer-contact-card pop-in" href="mailto:thiruwijerathne@gmail.com" title="Email Thiruni"><i class="fa-solid fa-envelope"></i><p>thiruwijerathne@gmail.com</p></a>
-      <a class="footer-contact-card pop-in" href="https://github.com/thiruniw" target="_blank" rel="noopener noreferrer" title="Visit GitHub"><i class="fa-brands fa-github"></i><p>GitHub</p></a>
-      <a class="footer-contact-card pop-in" href="https://www.linkedin.com/in/thiruni-wijerathne-14643b37a" target="_blank" rel="noopener noreferrer" title="Visit LinkedIn"><i class="fa-brands fa-linkedin"></i><p>LinkedIn</p></a>
-      <a class="footer-contact-card pop-in" href="tel:+94757489276" title="Call"><i class="fa-solid fa-phone"></i><p>+94 75 748 9276</p></a>
+    <div class="contact-form-card">
+      <form id="contactForm" style="display:flex; flex-direction:column; gap:1.5rem;">
+        <div>
+          <label for="name" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Your Name</label>
+          <input type="text" id="name" name="name" required style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'">
+        </div>
+        <div>
+          <label for="email" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Your Email</label>
+          <input type="email" id="email" name="email" required style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; transition:border-color 0.3s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'">
+        </div>
+        <div>
+          <label for="message" style="display:block; margin-bottom:0.5rem; font-weight:bold; color:var(--primary);">Message</label>
+          <textarea id="message" name="message" required rows="5" style="width:100%; padding:0.8rem; border:2px solid #28a74533; border-radius:6px; font-size:1rem; font-family:inherit; transition:border-color 0.3s; resize:vertical;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='#28a74533'"></textarea>
+        </div>
+        <button type="submit" style="background-color:var(--primary); color:#fff; padding:0.8rem 1.5rem; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer; transition:background-color 0.3s;" onmouseover="this.style.backgroundColor='#1b5e20'" onmouseout="this.style.backgroundColor='var(--primary)'"><i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Send Message</button>
+      </form>
     </div>
   </section>
 
@@ -624,7 +676,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleBtn = document.getElementById("mode-toggle");
     toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>'; // sun icon because dark mode is active
 
-    // Existing toggle functionality
     toggleBtn.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
         toggleBtn.innerHTML = document.body.classList.contains("dark-mode")
@@ -633,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// nav link active on scroll (use viewport center to determine active section)
+// nav link active on scroll
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -646,7 +697,6 @@ function updateActiveNav(){
       current = section.getAttribute('id');
     }
   });
-  // fallback: at very bottom -> last section
   if(!current && (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2)){
     const last = sections[sections.length -1];
     if(last) current = last.getAttribute('id');
@@ -660,10 +710,78 @@ function updateActiveNav(){
 
 window.addEventListener('scroll', updateActiveNav);
 window.addEventListener('resize', updateActiveNav);
-// run once on load
 updateActiveNav();
+</script>
 
-// (Typing loop removed — replaced with CSS fade animation for the full name.)
-  </script>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+  // Initialize EmailJS with your public key
+  (function() {
+      emailjs.init("epGCq7X6H33pctcis");
+  })();
+
+  // Get the contact form
+  const contactForm = document.getElementById("contactForm") || document.getElementById("contact-form");
+
+  if(contactForm){
+    // Create a status element below the form if it doesn't exist
+    let statusEl = document.getElementById("contactStatus");
+    if(!statusEl){
+        statusEl = document.createElement("div");
+        statusEl.id = "contactStatus";
+        statusEl.style.marginTop = "0.8rem";
+        statusEl.style.fontWeight = "600";
+        statusEl.style.transition = "opacity 0.5s";
+        contactForm.parentNode.insertBefore(statusEl, contactForm.nextSibling);
+    }
+
+    contactForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalBtnHTML = submitBtn ? submitBtn.innerHTML : null;
+        if(submitBtn){ 
+            submitBtn.disabled = true; 
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...'; 
+        }
+
+        // Get form values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+
+        // Show sending message
+        statusEl.textContent = "Sending message...";
+        statusEl.style.color = "var(--primary)";
+
+        emailjs.send("service_2zxytbj", "template_17fxix7", {
+            name: name,
+            "from-email": email,
+            message: message
+        })
+        .then(function() {
+            statusEl.textContent = "Message sent successfully! 💌";
+            statusEl.style.color = "var(--primary)";
+            contactForm.reset();
+            if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHTML || 'Send Message'; }
+
+            // Fade out after 2 seconds
+            setTimeout(() => {
+                statusEl.style.opacity = "0";
+            }, 2000);
+            
+        }, function(error) {
+            console.log(error);
+            statusEl.textContent = "Failed to send message. Please try again.";
+            statusEl.style.color = "#d9534f";
+            if(submitBtn){ submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHTML || 'Send Message'; }
+        });
+    });
+  } else {
+      console.error("Contact form not found! Please check the form ID.");
+  }
+</script>
 </body>
 </html>
